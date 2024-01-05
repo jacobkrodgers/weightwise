@@ -1,0 +1,108 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(uuid())
+
+  // Personal Information
+  firstName String
+  lastName String
+  username String @unique
+  email String @unique
+  passwordHash String
+
+  // System Information
+  joinDate DateTime @default(now())
+  lastVisitDate DateTime @default(now())
+  isAdmin Boolean @default(false)
+  isCoach Boolean @default(false)
+  isWebmaster Boolean @default(false)
+  isVerified Boolean @default(false)
+  isBanned Boolean @default(false)
+  isSubscriber Boolean @default(false)
+
+
+  // Profile
+  avatarPath String @default("./defaultAvatar.svg")
+  aboutMe String @default("")
+  profileVisibility String @default("public")
+
+  // Weight Loss Info
+  weightLossProfile WeightLossProfile?
+  dietaryRestrictions dietaryRestrictions?
+}
+
+model Session {
+  id String @id @default(uuid())
+  userId String
+  expires DateTime
+}
+
+model WeightLossProfile {
+  user User @relation(fields: [userId], references: [id])
+  id String @id @default(uuid())
+  userId String @unique
+
+  heightInCentimeters Int
+  startingWeightInGrams Int
+  currentWeightInGrams Int
+  targetWeightInGrams Int
+  activityLevel String
+  sex String
+  age Int
+
+  weightLossPhotos WeightLossPhotos[]
+  weightLossHistory WeightLossHistory[]
+}
+
+model WeightLossPhotos {
+  weightLossProfile WeightLossProfile @relation(fields: [profileId], references: [id])
+  id String @id @default(uuid())
+  profileId String @unique
+
+  photoPath String
+  date DateTime @default(now())
+
+}
+
+model WeightLossHistory {
+  weightLossProfile WeightLossProfile @relation(fields: [profileId], references: [id])
+  id String @id @default(uuid())
+  profileId String @unique
+
+  date DateTime @default(now())
+  weightInGrams Int
+}
+
+model dietaryRestrictions {
+  user User @relation(fields: [userId], references: [id])
+  id String @id @default(uuid())
+  userId String @unique
+
+  // Allergies
+  dairy Boolean @default(false)
+  eggs Boolean @default(false)
+  fish Boolean @default(false)
+  gluten Boolean @default(false)
+  peanuts Boolean @default(false)
+  shellfish Boolean @default(false)
+  soy Boolean @default(false)
+  treeNuts Boolean @default(false)
+  wheat Boolean @default(false)
+  redMeat Boolean @default(false)
+
+  // Diets
+  vegetarian Boolean @default(false)
+  vegan Boolean @default(false)
+  pescatarian Boolean @default(false)
+  paleo Boolean @default(false)
+  keto Boolean @default(false)
+  kosher Boolean @default(false)
+  halal Boolean @default(false)
+}
