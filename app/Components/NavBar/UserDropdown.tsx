@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { logoutUser } from "./actions";
 import { useRouter } from 'next/navigation'
+import Link from 'next/link';
 
 export default function UserDropdown(props:any) {
 
@@ -13,15 +14,7 @@ export default function UserDropdown(props:any) {
       }, []);
 
     const logout = async () => {
-        try{
-
-            const status = await logoutUser();
-            if (status === 200)
-                router.replace('/login');
-
-        } catch (err) {
-            throw err;
-        }
+        await logoutUser();
     }
 
     return(
@@ -30,8 +23,8 @@ export default function UserDropdown(props:any) {
                 {props.username}
             </button>
             <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-                <li><a className="dropdown-item" href="/profile">Profile</a></li>
-                <li><a className="dropdown-item" onClick={logout}>Log Out</a></li>
+                <li><Link className="dropdown-item" href="/profile">Profile</Link></li>
+                <li><Link className="dropdown-item" href="/login" onClick={logout}>Log Out</Link></li>
             </ul>
         </div>
     )

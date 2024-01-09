@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from "react";
+import Link from 'next/link';
 
 export default function NavLinks() {
     useEffect(() => {
@@ -13,8 +14,8 @@ export default function NavLinks() {
                 Calculators
             </button>
             <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li><a className="dropdown-item" href="#">Target Date</a></li>
-                <li><a className="dropdown-item" href="#">Calorie Intake</a></li>
+                <li><Link className="dropdown-item" href="/calculators/target-date">Target Date</Link></li>
+                <li><Link className="dropdown-item" href="/calculators/caloric-intake">Caloric Intake</Link></li>
             </ul>
         </div>
     )

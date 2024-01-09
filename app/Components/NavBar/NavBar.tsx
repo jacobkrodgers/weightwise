@@ -5,7 +5,7 @@ import LoginLinks from './LoginLinks';
 import { getUser } from './actions';
 import NavLinks from './NavLinks';
 import UserDropdown from './UserDropdown';
-import { logoutUser } from './actions';
+import Link from 'next/link';
 
 export default async function NavBar() 
 {   
@@ -19,7 +19,7 @@ export default async function NavBar()
     return (
         <nav className="navbar bg-dark text-white" >
             <div className="container-fluid">
-                <a className="navbar-brand" href="/">
+                <Link className="navbar-brand" href="/">
                     <Image 
                         className="d-inline-block align-text-top"
                         src="/logo.png" 
@@ -27,7 +27,7 @@ export default async function NavBar()
                         width="24"
                         height="24"/>
                     <span className="text-white"> WeightWise</span>
-                </a>
+                </Link>
                 <NavLinks />
                 {userProfile ? <UserDropdown username={userProfile.username} /> : <LoginLinks />}
             </div>
