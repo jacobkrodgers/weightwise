@@ -2,12 +2,9 @@
 
 import { useEffect } from "react";
 import { logoutUser } from "./actions";
-import { useRouter } from 'next/navigation'
 import Link from 'next/link';
 
 export default function UserDropdown(props:any) {
-
-    const router = useRouter()
 
     useEffect(() => {
         require("bootstrap/dist/js/bootstrap.bundle.min.js");
